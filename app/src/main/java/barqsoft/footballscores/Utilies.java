@@ -100,4 +100,9 @@ public class Utilies
                 return R.drawable.no_icon;
         }
     }
+
+    public static int inversePositionForRTL(int position, int total)
+    {
+        return total - position - 1;
+    }
 }
