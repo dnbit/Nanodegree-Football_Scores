@@ -281,7 +281,6 @@ public class myFetchService extends IntentService
         {
             Log.e(LOG_TAG, e.getMessage());
         }
-
     }
 }
 

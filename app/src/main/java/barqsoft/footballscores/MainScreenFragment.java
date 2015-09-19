@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import barqsoft.footballscores.service.myFetchService;
+import barqsoft.footballscores.widget.ScoresWidgetProvider;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -23,7 +24,6 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     public scoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
-    private int last_selected_item = -1;
 
     public MainScreenFragment()
     {
@@ -62,6 +62,9 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
                 mAdapter.notifyDataSetChanged();
             }
         });
+
+        ScoresWidgetProvider.broadcastToScoresWidgetProvider(getContext());
+
         return rootView;
     }
 
@@ -102,6 +105,4 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     {
         mAdapter.swapCursor(null);
     }
-
-
 }
