@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
@@ -105,10 +106,25 @@ public class ScoresWidgetIntentService extends IntentService implements Loader.O
             // Construct the RemoteViews object
             RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.scores_widget);
 
+            // Continue only if there is data available
             if (cursor.getCount() > 0)
             {
-                // get the last match
+                // Start from last to find last updated match
                 cursor.moveToLast();
+
+                while (!cursor.isFirst())
+                {
+                    String home = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_COL));
+                    int home_goals = cursor.getInt(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_GOALS_COL));
+                    Log.i("***home goals***", home + " " + home_goals);
+                    if (home_goals > -1)
+                    {
+                        // If there is data for goals we use this cursor
+                        break;
+                    }
+                    // Otherwise we move to the previous one
+                    cursor.moveToPrevious();
+                }
 
                 Utilies.populateWidgetView(cursor, remoteView);
 
