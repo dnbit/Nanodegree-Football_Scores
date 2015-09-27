@@ -1,0 +1,13 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/widget_margin"
+                android:background="#232323">
+
+    <ListView
+        android:id="@+id/collection_widget_listview"
+        android:layout_width="match_parent"
+        android:background="#232323"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

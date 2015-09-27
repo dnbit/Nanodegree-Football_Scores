@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import barqsoft.footballscores.service.myFetchService;
+import barqsoft.footballscores.widget.CollectionWidgetProvider;
 import barqsoft.footballscores.widget.ScoresWidgetProvider;
 
 /**
@@ -64,6 +65,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         });
 
         ScoresWidgetProvider.broadcastToScoresWidgetProvider(getContext());
+        CollectionWidgetProvider.broadcastToCollectionWidgetProvider(getContext());
 
         return rootView;
     }

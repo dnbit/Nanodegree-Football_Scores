@@ -1,5 +1,8 @@
 package barqsoft.footballscores;
 
+import android.database.Cursor;
+import android.widget.RemoteViews;
+
 /**
  * Created by yehya khaled on 3/3/2015.
  */
@@ -104,5 +107,21 @@ public class Utilies
     public static int inversePositionForRTL(int position, int total)
     {
         return total - position - 1;
+    }
+
+    public static void populateWidgetView(Cursor cursor, RemoteViews remoteView)
+    {
+        String home = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_COL));
+        String away = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.AWAY_COL));
+        int home_goals = cursor.getInt(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_GOALS_COL));
+        int away_goals = cursor.getInt(cursor.getColumnIndex(DatabaseContract.scores_table.AWAY_GOALS_COL));
+        String matchTime = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.TIME_COL));
+
+        remoteView.setTextViewText(R.id.home_name, home);
+        remoteView.setTextViewText(R.id.away_name, away);
+        remoteView.setTextViewText(R.id.score_textview, Utilies.getScores(home_goals, away_goals));
+        remoteView.setTextViewText(R.id.data_textview, matchTime);
+        // views.setImageViewResource(R.id.home_crest, Utilies.getTeamCrestByTeamName(home));
+        // views.setImageViewResource(R.id.away_crest, Utilies.getTeamCrestByTeamName(away));
     }
 }

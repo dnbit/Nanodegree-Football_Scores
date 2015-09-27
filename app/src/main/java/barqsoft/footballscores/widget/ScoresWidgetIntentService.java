@@ -103,34 +103,23 @@ public class ScoresWidgetIntentService extends IntentService implements Loader.O
         for (int appWidgetId : appWidgetIds)
         {
             // Construct the RemoteViews object
-            RemoteViews views = new RemoteViews(getPackageName(), R.layout.scores_widget);
+            RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.scores_widget);
 
             if (cursor.getCount() > 0)
             {
                 // get the last match
                 cursor.moveToLast();
 
-                String home = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_COL));
-                String away = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.AWAY_COL));
-                int home_goals = cursor.getInt(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_GOALS_COL));
-                int away_goals = cursor.getInt(cursor.getColumnIndex(DatabaseContract.scores_table.AWAY_GOALS_COL));
-                String matchTime = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.TIME_COL));
-
-                views.setTextViewText(R.id.home_name, home);
-                views.setTextViewText(R.id.away_name, away);
-                views.setTextViewText(R.id.score_textview, Utilies.getScores(home_goals, away_goals));
-                views.setTextViewText(R.id.data_textview, matchTime);
-//                views.setImageViewResource(R.id.home_crest, Utilies.getTeamCrestByTeamName(home));
-//                views.setImageViewResource(R.id.away_crest, Utilies.getTeamCrestByTeamName(away));
+                Utilies.populateWidgetView(cursor, remoteView);
 
                 Intent widgetIntent = new Intent(this, MainActivity.class);
                 PendingIntent widgetPendingIntent =
                         PendingIntent.getActivity(this, 0, widgetIntent, 0);
 
-                views.setOnClickPendingIntent(R.id.widget, widgetPendingIntent);
+                remoteView.setOnClickPendingIntent(R.id.widget, widgetPendingIntent);
 
                 // Instruct the widget manager to update the widget
-                appWidgetManager.updateAppWidget(appWidgetId, views);
+                appWidgetManager.updateAppWidget(appWidgetId, remoteView);
             }
         }
     }
