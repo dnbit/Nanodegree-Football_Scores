@@ -3,6 +3,7 @@ package barqsoft.footballscores.widget;
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -34,7 +35,9 @@ public class CollectionWidgetProvider extends AppWidgetProvider
     {
         super.onReceive(context, intent);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        appWidgetManager.notifyAppWidgetViewDataChanged(0, R.id.collection_widget_listview);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+                new ComponentName(context, getClass()));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.collection_widget_listview);
     }
 
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager,

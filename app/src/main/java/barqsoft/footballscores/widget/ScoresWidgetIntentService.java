@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
@@ -114,9 +113,7 @@ public class ScoresWidgetIntentService extends IntentService implements Loader.O
 
                 while (!cursor.isFirst())
                 {
-                    String home = cursor.getString(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_COL));
                     int home_goals = cursor.getInt(cursor.getColumnIndex(DatabaseContract.scores_table.HOME_GOALS_COL));
-                    Log.i("***home goals***", home + " " + home_goals);
                     if (home_goals > -1)
                     {
                         // If there is data for goals we use this cursor
