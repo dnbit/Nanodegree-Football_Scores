@@ -38,11 +38,6 @@ public class CollectionWidgetRemoteViewService extends RemoteViewsService
             @Override
             public void onDataSetChanged()
             {
-                if (cursor != null)
-                {
-                    cursor.close();
-                }
-
                 loaderListener = new Loader.OnLoadCompleteListener<Cursor>()
                 {
                     @Override
@@ -56,7 +51,14 @@ public class CollectionWidgetRemoteViewService extends RemoteViewsService
                 Date today = new Date(System.currentTimeMillis());
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
                 String[] dateArray = {formater.format(today)};
-                Looper.prepare();
+                if (Looper.myLooper() != null)
+                {
+                    Looper.myLooper().prepare();
+                } else
+                {
+                    Looper.prepare();
+                }
+
                 CursorLoader mCursorLoader = new CursorLoader(getApplicationContext(), DatabaseContract.scores_table.buildScoreWithDate(),
                         null, null, dateArray, null);
                 mCursorLoader.registerListener(1, loaderListener);
