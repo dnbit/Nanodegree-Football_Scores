@@ -51,12 +51,9 @@ public class CollectionWidgetRemoteViewService extends RemoteViewsService
                 Date today = new Date(System.currentTimeMillis());
                 SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
                 String[] dateArray = {formater.format(today)};
-                if (Looper.myLooper() != null)
+                if (Looper.myLooper() == null)
                 {
                     Looper.myLooper().prepare();
-                } else
-                {
-                    Looper.prepare();
                 }
 
                 CursorLoader mCursorLoader = new CursorLoader(getApplicationContext(), DatabaseContract.scores_table.buildScoreWithDate(),
